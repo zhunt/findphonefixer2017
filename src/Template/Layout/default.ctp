@@ -15,43 +15,115 @@
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
+    <!DOCTYPE html>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+    <html lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-</head>
-<body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
+
+        <link href="/assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css" type="text/css">
+        <link rel="stylesheet" href="/css/bootstrap-select.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/owl.carousel.css" type="text/css">
+        <link rel="stylesheet" href="/css/jquery.nouislider.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/colors/brown.css" type="text/css">
+        <link rel="stylesheet" href="/css/user.style.css" type="text/css">
+
+        <title>Find Phone Fixer: Cellphone Repairs
+            <?= $cakeDescription ?>:
+            <?= $this->fetch('title') ?>
+        </title>
+
+        <meta name="description" content="Find places near you to get your iPhone, Samsung, or cellphone repaired.">
+
+        <?= $this->Html->meta('icon') ?>
+
+
+        <?php /*
+            echo $this->Html->css('base.css')
+            echo $this->Html->css('cake.css')
+        */ ?>
+
+        <?= $this->fetch('meta') ?>
+        <?= $this->fetch('css') ?>
+        <?= $this->fetch('script') ?>
+
+    </head>
+
+<body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top">
+
+<!-- Outer Wrapper-->
+<div id="outer-wrapper">
+    <!-- Inner Wrapper -->
+    <div id="inner-wrapper">
+
+        <!-- Navigation-->
+        <div class="header">
+            <div class="wrapper">
+                <div class="brand">
+                    <a href="index-restaurants.html"><img src="/assets/img/logo-restaurants.png" alt="logo"></a>
+                </div>
+                <nav class="navigation-items">
+                    <div class="wrapper">
+                        <ul class="main-navigation navigation-top-header"></ul>
+                        <ul class="user-area">
+                            <li><a href="sign-in.html">Sign In</a></li>
+                            <li><a href="register.html"><strong>Register</strong></a></li>
+                        </ul>
+                        <a href="submit.html" class="submit-item">
+                            <div class="content"><span>Submit Your Item</span></div>
+                            <div class="icon">
+                                <i class="fa fa-plus"></i>
+                            </div>
+                        </a>
+                        <div class="toggle-navigation">
+                            <div class="icon">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
         </div>
-    </nav>
+        <!-- end Navigation-->
+
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+
         <?= $this->fetch('content') ?>
+
     </div>
-    <footer>
-    </footer>
+</div>
+
+<script type="text/javascript" src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="/js/before.load.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script type="text/javascript" src="/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/js/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="/js/jquery.nouislider.all.min.js"></script>
+<script type="text/javascript" src="/js/custom.js"></script>
+<script type="text/javascript" src="/js/maps.js"></script>
+
+<script>
+    $(window).load(function(){
+        var rtl = false; // Use RTL
+        initializeOwl(rtl);
+    });
+
+    // autoComplete(); // turn off for now
+</script>
+
+<!--[if lte IE 9]>
+<script type="text/javascript" src="/js/ie-scripts.js"></script>
+<![endif]-->
+
+
 </body>
 </html>
