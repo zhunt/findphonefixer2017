@@ -23,7 +23,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        <link href="/assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+        <link href="/fonts/font-awesome.css" rel="stylesheet" type="text/css">
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/bootstrap/css/bootstrap.css" type="text/css">
         <link rel="stylesheet" href="/css/bootstrap-select.min.css" type="text/css">
@@ -33,8 +33,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <link rel="stylesheet" href="/css/user.style.css" type="text/css">
 
         <title>Find Phone Fixer: Cellphone Repairs
-            <?= $cakeDescription ?>:
-            <?= $this->fetch('title') ?>
+            <?php
+            /**
+             echo $cakeDescription
+             $this->fetch('title')  */?>
         </title>
 
         <meta name="description" content="Find places near you to get your iPhone, Samsung, or cellphone repaired.">
@@ -64,7 +66,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class="header">
             <div class="wrapper">
                 <div class="brand">
-                    <a href="index-restaurants.html"><img src="/assets/img/logo-restaurants.png" alt="logo"></a>
+                    <a href="#"><img src="/img/findphonefixer-logo.png" width="250" alt="logo"></a>
                 </div>
                 <nav class="navigation-items">
                     <div class="wrapper">
@@ -91,13 +93,26 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </div>
         </div>
         <!-- end Navigation-->
+        <div id="page-canvas">
+            <!--Off Canvas Navigation-->
+            <nav class="off-canvas-navigation">
+                <header>Navigation</header>
+                <div class="main-navigation navigation-off-canvas"></div>
+            </nav>
 
-    <?= $this->Flash->render() ?>
+            <!--end Off Canvas Navigation-->
+            <!--Page Content-->
+            <div id="page-content">
 
-        <?= $this->fetch('content') ?>
+                <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
+
+            </div>
+        </div>
 
     </div>
 </div>
+
 
 <script type="text/javascript" src="/js/jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="/js/before.load.js"></script>
