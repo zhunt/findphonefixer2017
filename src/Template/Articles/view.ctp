@@ -1,43 +1,61 @@
-<?php debug($article->categories); debug($article->tags); ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Article'), ['action' => 'edit', $article->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Article'), ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Articles'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Article'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="articles view large-9 medium-8 columns content">
-    <h3><?= h($article->name) ?></h3>
-    <table class="vertical-table">
+<?php
+$this->extend('../Layout/TwitterBootstrap/dashboard');
+
+
+$this->start('tb_actions');
+?>
+<li><?= $this->Html->link(__('Edit Article'), ['action' => 'edit', $article->id]) ?> </li>
+<li><?= $this->Form->postLink(__('Delete Article'), ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->id)]) ?> </li>
+<li><?= $this->Html->link(__('List Articles'), ['action' => 'index']) ?> </li>
+<li><?= $this->Html->link(__('New Article'), ['action' => 'add']) ?> </li>
+<?php
+$this->end();
+
+$this->start('tb_sidebar');
+?>
+<ul class="nav nav-sidebar">
+<li><?= $this->Html->link(__('Edit Article'), ['action' => 'edit', $article->id]) ?> </li>
+<li><?= $this->Form->postLink(__('Delete Article'), ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete # {0}?', $article->id)]) ?> </li>
+<li><?= $this->Html->link(__('List Articles'), ['action' => 'index']) ?> </li>
+<li><?= $this->Html->link(__('New Article'), ['action' => 'add']) ?> </li>
+</ul>
+<?php
+$this->end();
+?>
+<div class="panel panel-default">
+    <!-- Panel header -->
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= h($article->name) ?></h3>
+    </div>
+    <table class="table table-striped" cellpadding="0" cellspacing="0">
         <tr>
-            <th scope="row"><?= __('Name') ?></th>
+            <td><?= __('Name') ?></td>
             <td><?= h($article->name) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Tags') ?></th>
+            <td><?= __('Tags') ?></td>
             <td><?= h($article->tags) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Categories') ?></th>
+            <td><?= __('Categories') ?></td>
             <td><?= h($article->categories) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
+            <td><?= __('Id') ?></td>
             <td><?= $this->Number->format($article->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Created') ?></th>
+            <td><?= __('Created') ?></td>
             <td><?= h($article->created) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Modifed') ?></th>
+            <td><?= __('Modifed') ?></td>
             <td><?= h($article->modifed) ?></td>
         </tr>
+        <tr>
+            <td><?= __('Body') ?></td>
+            <td><?= $this->Text->autoParagraph(h($article->body)); ?></td>
+        </tr>
     </table>
-    <div class="row">
-        <h4><?= __('Body') ?></h4>
-        <?= $this->Text->autoParagraph(h($article->body)); ?>
-    </div>
 </div>
+
