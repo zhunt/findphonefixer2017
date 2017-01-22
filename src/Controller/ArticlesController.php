@@ -18,6 +18,8 @@ class ArticlesController extends AppController
      */
     public function index()
     {
+        $this->viewBuilder()->layout('admin');
+
         $articles = $this->paginate($this->Articles);
 
         $this->set(compact('articles'));
@@ -33,6 +35,8 @@ class ArticlesController extends AppController
      */
     public function view($id = null)
     {
+        $this->viewBuilder()->layout('admin');
+
         $article = $this->Articles->get($id, [
             'contain' => []
         ]);
@@ -48,18 +52,21 @@ class ArticlesController extends AppController
      */
     public function add()
     {
+        $this->viewBuilder()->layout('admin');
+
         $article = $this->Articles->newEntity();
 
         if ($this->request->is('post')) {
-            $article = $this->Articles->patchEntity($article, $this->request->data);
 
-            $article->tags = ['dogs', 'cats', 'bears'];
-            $article->categories = ['news', 'reviews'];
+            $this->request->data['tags'] = explode(',', $this->request->data['tags']);
+            $this->request->data['categories'] = explode(',', $this->request->data['categories']);
+
+            $article = $this->Articles->patchEntity($article, $this->request->data);
 
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('The article has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+               // return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The article could not be saved. Please, try again.'));
             }
@@ -77,11 +84,19 @@ class ArticlesController extends AppController
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->layout('admin');
+
         $article = $this->Articles->get($id, [
             'contain' => []
         ]);
-        $article->tags = ['dogs', 'cats', 'bears'];
+
+
         if ($this->request->is(['patch', 'post', 'put'])) {
+
+            // convert to array for saving
+            $this->request->data['tags'] = explode(',', $this->request->data['tags']);
+            $this->request->data['categories'] = explode(',', $this->request->data['categories']);
+
             $article = $this->Articles->patchEntity($article, $this->request->data);
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('The article has been saved.'));
@@ -90,10 +105,12 @@ class ArticlesController extends AppController
             } else {
                 $this->Flash->error(__('The article could not be saved. Please, try again.'));
             }
-        } debug($article);
+        }
 
-        $article->categories = json_encode($article->categories);
-        //$article->tags = json_encode($article->tags);
+        // convert to text for display
+        $this->request->data['tags'] = implode(',', $article['tags']);
+        $this->request->data['categories'] = implode(',', $article['categories']);
+
         $this->set(compact('article'));
         $this->set('_serialize', ['article']);
     }

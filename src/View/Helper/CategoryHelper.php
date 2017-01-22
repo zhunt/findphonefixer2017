@@ -17,11 +17,31 @@ class CategoryHelper extends Helper
      */
     protected $_defaultConfig = [];
 
-    public $helpers = ['Html'];
+    public $helpers = ['Html', 'Form'];
 
-    public function edit(){
+    public function display(){
 
-        return '<div>hello world</div>';
+        $sHtml = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">';
+        /*
+        $data = [ 'news' => 'News', "tips" => 'Tips', "other" => 'Other'];
+
+
+        //$nestedList= $this->Html->nestedList($data);
+
+        $sHtml .= $this->Form->radio( 'field', $data, ['empty' => '(choose one)', 'class' => 'selectpicker', 'multiple' => true ] );
+
+        $sHtml .= "
+        <script>
+        $('.selectpicker').selectpicker({
+  style: 'btn-info',
+  size: 4
+});
+        </script>
+";
+*/
+        return '<div>' .$sHtml .'</div>';
+
+
     }
 
 }

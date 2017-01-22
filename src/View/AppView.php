@@ -15,6 +15,9 @@ namespace App\View;
 
 use Cake\View\View;
 
+use BootstrapUI\View\UIView;
+
+
 /**
  * Application View
  *
@@ -37,6 +40,6 @@ class AppView extends View
     public function initialize()
     {
         parent::initialize();
-        $this->loadHelper('Category');
+        //$this->loadHelper('Category');
     }
 }
