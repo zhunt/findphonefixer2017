@@ -23,7 +23,7 @@ $this->end();
     echo $this->Form->input('body');
     echo $this->Form->input('tags');
     echo $this->Form->input('categories');
-    echo $this->Form->input('modifed');
+    echo $this->Form->input('modified');
     ?>
 </fieldset>
 <?= $this->Form->button(__("Add")); ?>
