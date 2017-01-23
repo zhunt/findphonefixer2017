@@ -22,7 +22,7 @@ class LandingsController extends AppController
 
        //$result = \Cloudinary\Uploader::upload("C:\\xampp\\htdocs\\findphonefixer2017\\webroot\\img\\title-bg-1.jpg"); debug($result); exit;
 
-        $this->viewBuilder()->layout('default');
+        $this->viewBuilder()->layout('default-public');
         $landings = null; //$this->paginate($this->Landings);
 
         $this->set(compact('landings'));
