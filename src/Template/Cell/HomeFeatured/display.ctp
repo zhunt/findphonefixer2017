@@ -29,7 +29,7 @@
                             <div class="icon">
                                 <i class="fa fa-thumbs-up"></i>
                             </div>
-                            <img src="/img/items/home-feature-image-1.jpg" alt="">
+                            <img src="/img/items/home-feature-image-1.jpg" alt="size: 213x159" >
                         </a>
                     </div>
                     <div class="wrapper">
