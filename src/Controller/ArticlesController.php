@@ -18,8 +18,6 @@ class ArticlesController extends AppController
      */
     public function index()
     {
-        $this->viewBuilder()->layout('admin');
-
         $articles = $this->paginate($this->Articles);
 
         $this->set(compact('articles'));
@@ -35,8 +33,6 @@ class ArticlesController extends AppController
      */
     public function view($id = null)
     {
-        $this->viewBuilder()->layout('admin');
-
         $article = $this->Articles->get($id, [
             'contain' => []
         ]);
@@ -48,28 +44,23 @@ class ArticlesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
-        $this->viewBuilder()->layout('admin');
-
         $article = $this->Articles->newEntity();
-
         if ($this->request->is('post')) {
 
             $this->request->data['tags'] = explode(',', $this->request->data['tags']);
             $this->request->data['categories'] = explode(',', $this->request->data['categories']);
 
             $article = $this->Articles->patchEntity($article, $this->request->data);
-
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('The article has been saved.'));
 
-               // return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The article could not be saved. Please, try again.'));
+                return $this->redirect(['action' => 'index']);
             }
+            $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
         $this->set(compact('article'));
         $this->set('_serialize', ['article']);
@@ -79,21 +70,16 @@ class ArticlesController extends AppController
      * Edit method
      *
      * @param string|null $id Article id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $this->viewBuilder()->layout('admin');
-
         $article = $this->Articles->get($id, [
             'contain' => []
         ]);
-
-
         if ($this->request->is(['patch', 'post', 'put'])) {
 
-            // convert to array for saving
             $this->request->data['tags'] = explode(',', $this->request->data['tags']);
             $this->request->data['categories'] = explode(',', $this->request->data['categories']);
 
@@ -102,12 +88,10 @@ class ArticlesController extends AppController
                 $this->Flash->success(__('The article has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The article could not be saved. Please, try again.'));
             }
+            $this->Flash->error(__('The article could not be saved. Please, try again.'));
         }
 
-        // convert to text for display
         $this->request->data['tags'] = implode(',', $article['tags']);
         $this->request->data['categories'] = implode(',', $article['categories']);
 

@@ -36,9 +36,16 @@ $this->end();
     <legend><?= __('Edit {0}', ['Article']) ?></legend>
     <?php
     echo $this->Form->input('name');
+    echo $this->Form->input('seo_title');
+    echo $this->Form->input('meta_desc');
+    echo $this->Form->input('social_media_url');
     echo $this->Form->input('body');
     echo $this->Form->input('tags');
+    echo $this->Form->input('homepage_image_url');
+    echo $this->Form->input('homepage_text');
     echo $this->Form->input('categories');
+    echo $this->Form->input('flag_published');
+    echo $this->Form->input('publish_date');
     echo $this->Form->input('modifed');
     ?>
 </fieldset>

@@ -68,13 +68,36 @@ class ArticlesTable extends Table
             ->notEmpty('name');
 
         $validator
+            ->allowEmpty('seo_title');
+
+        $validator
+            ->allowEmpty('meta_desc');
+
+        $validator
+            ->allowEmpty('social_media_url');
+
+        $validator
             ->allowEmpty('body');
 
         $validator
             ->allowEmpty('tags');
 
         $validator
+            ->allowEmpty('homepage_image_url');
+
+        $validator
+            ->allowEmpty('homepage_text');
+
+        $validator
             ->allowEmpty('categories');
+
+        $validator
+            ->boolean('flag_published')
+            ->allowEmpty('flag_published');
+
+        $validator
+            ->date('publish_date')
+            ->allowEmpty('publish_date');
 
         $validator
             ->dateTime('modifed')

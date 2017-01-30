@@ -4,24 +4,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Article Entity
+ * CityRegion Entity
  *
  * @property int $id
  * @property string $name
  * @property string $seo_title
- * @property string $meta_desc
- * @property string $social_media_url
- * @property string $body
- * @property $tags
- * @property string $homepage_image_url
- * @property string $homepage_text
- * @property $categories
- * @property bool $flag_published
- * @property \Cake\I18n\Time $publish_date
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modifed
+ * @property string $seo_desc
+ * @property int $city_id
+ *
+ * @property \App\Model\Entity\City $city
+ * @property \App\Model\Entity\Venue[] $venues
  */
-class Article extends Entity
+class CityRegion extends Entity
 {
 
     /**

@@ -4,15 +4,21 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Blog Entity
+ * City Entity
  *
  * @property int $id
- * @property string $title
- * @property string $body
- * @property bool $flag_published
- * @property \Cake\I18n\Time $created
+ * @property string $name
+ * @property string $slug
+ * @property string $seo_title
+ * @property string $seo_desc
+ * @property string $intro_text
+ * @property int $province_id
+ * @property int $country_id
+ *
+ * @property \App\Model\Entity\Mall[] $malls
+ * @property \App\Model\Entity\Venue[] $venues
  */
-class Blog extends Entity
+class City extends Entity
 {
 
     /**

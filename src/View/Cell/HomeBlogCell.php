@@ -24,5 +24,17 @@ class HomeBlogCell extends Cell
      */
     public function display()
     {
+
+
+        $this->loadModel('Articles');
+
+       $result =  $this->Articles->find('all', [
+           'conditions' => ['flag_published' => 1],
+           'fields' => ['name','seo_title','homepage_image_url', 'homepage_text', 'categories'],
+           'contain' => [],
+           'order' => 'publish_date desc'
+       ]);
+
+        $this->set('blogs', $result);
     }
 }

@@ -4,24 +4,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Article Entity
+ * Country Entity
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string $seo_title
- * @property string $meta_desc
- * @property string $social_media_url
- * @property string $body
- * @property $tags
- * @property string $homepage_image_url
- * @property string $homepage_text
- * @property $categories
- * @property bool $flag_published
- * @property \Cake\I18n\Time $publish_date
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modifed
+ * @property string $seo_desc
+ * @property string $intro_text
+ *
+ * @property \App\Model\Entity\City[] $cities
+ * @property \App\Model\Entity\Province[] $provinces
+ * @property \App\Model\Entity\Venue[] $venues
  */
-class Article extends Entity
+class Country extends Entity
 {
 
     /**

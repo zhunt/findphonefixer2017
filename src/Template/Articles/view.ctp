@@ -33,8 +33,24 @@ $this->end();
             <td><?= h($article->name) ?></td>
         </tr>
         <tr>
+            <td><?= __('Seo Title') ?></td>
+            <td><?= h($article->seo_title) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Meta Desc') ?></td>
+            <td><?= h($article->meta_desc) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Social Media Url') ?></td>
+            <td><?= h($article->social_media_url) ?></td>
+        </tr>
+        <tr>
             <td><?= __('Tags') ?></td>
             <td><?= h($article->tags) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Homepage Image Url') ?></td>
+            <td><?= h($article->homepage_image_url) ?></td>
         </tr>
         <tr>
             <td><?= __('Categories') ?></td>
@@ -45,6 +61,10 @@ $this->end();
             <td><?= $this->Number->format($article->id) ?></td>
         </tr>
         <tr>
+            <td><?= __('Publish Date') ?></td>
+            <td><?= h($article->publish_date) ?></td>
+        </tr>
+        <tr>
             <td><?= __('Created') ?></td>
             <td><?= h($article->created) ?></td>
         </tr>
@@ -53,8 +73,16 @@ $this->end();
             <td><?= h($article->modifed) ?></td>
         </tr>
         <tr>
+            <td><?= __('Flag Published') ?></td>
+            <td><?= $article->flag_published ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr>
             <td><?= __('Body') ?></td>
             <td><?= $this->Text->autoParagraph(h($article->body)); ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Homepage Text') ?></td>
+            <td><?= $this->Text->autoParagraph(h($article->homepage_text)); ?></td>
         </tr>
     </table>
 </div>
