@@ -49,6 +49,10 @@ $this->end();
     </div>
     <table class="table table-striped" cellpadding="0" cellspacing="0">
         <tr>
+            <td><?= __('Name') ?></td>
+            <td><?= h($venue->name) ?></td>
+        </tr>
+        <tr>
             <td><?= __('Slug') ?></td>
             <td><?= h($venue->slug) ?></td>
         </tr>

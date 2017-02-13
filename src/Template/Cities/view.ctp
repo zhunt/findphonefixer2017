@@ -8,6 +8,10 @@ $this->start('tb_actions');
 <li><?= $this->Form->postLink(__('Delete City'), ['action' => 'delete', $city->id], ['confirm' => __('Are you sure you want to delete # {0}?', $city->id)]) ?> </li>
 <li><?= $this->Html->link(__('List Cities'), ['action' => 'index']) ?> </li>
 <li><?= $this->Html->link(__('New City'), ['action' => 'add']) ?> </li>
+<li><?= $this->Html->link(__('List Provinces'), ['controller' => 'Provinces', 'action' => 'index']) ?> </li>
+<li><?= $this->Html->link(__('New Province'), ['controller' => 'Provinces', 'action' => 'add']) ?> </li>
+<li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']) ?> </li>
+<li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']) ?> </li>
 <li><?= $this->Html->link(__('List Malls'), ['controller' => 'Malls', 'action' => 'index']) ?> </li>
 <li><?= $this->Html->link(__('New Mall'), ['controller' => 'Malls', 'action' => 'add']) ?> </li>
 <li><?= $this->Html->link(__('List Venues'), ['controller' => 'Venues', 'action' => 'index']) ?> </li>
@@ -22,6 +26,10 @@ $this->start('tb_sidebar');
 <li><?= $this->Form->postLink(__('Delete City'), ['action' => 'delete', $city->id], ['confirm' => __('Are you sure you want to delete # {0}?', $city->id)]) ?> </li>
 <li><?= $this->Html->link(__('List Cities'), ['action' => 'index']) ?> </li>
 <li><?= $this->Html->link(__('New City'), ['action' => 'add']) ?> </li>
+<li><?= $this->Html->link(__('List Provinces'), ['controller' => 'Provinces', 'action' => 'index']) ?> </li>
+<li><?= $this->Html->link(__('New Province'), ['controller' => 'Provinces', 'action' => 'add']) ?> </li>
+<li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']) ?> </li>
+<li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']) ?> </li>
 <li><?= $this->Html->link(__('List Malls'), ['controller' => 'Malls', 'action' => 'index']) ?> </li>
 <li><?= $this->Html->link(__('New Mall'), ['controller' => 'Malls', 'action' => 'add']) ?> </li>
 <li><?= $this->Html->link(__('List Venues'), ['controller' => 'Venues', 'action' => 'index']) ?> </li>
@@ -53,16 +61,16 @@ $this->end();
             <td><?= h($city->seo_desc) ?></td>
         </tr>
         <tr>
+            <td><?= __('Province') ?></td>
+            <td><?= $city->has('province') ? $this->Html->link($city->province->name, ['controller' => 'Provinces', 'action' => 'view', $city->province->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Country') ?></td>
+            <td><?= $city->has('country') ? $this->Html->link($city->country->name, ['controller' => 'Countries', 'action' => 'view', $city->country->id]) : '' ?></td>
+        </tr>
+        <tr>
             <td><?= __('Id') ?></td>
             <td><?= $this->Number->format($city->id) ?></td>
-        </tr>
-        <tr>
-            <td><?= __('Province Id') ?></td>
-            <td><?= $this->Number->format($city->province_id) ?></td>
-        </tr>
-        <tr>
-            <td><?= __('Country Id') ?></td>
-            <td><?= $this->Number->format($city->country_id) ?></td>
         </tr>
         <tr>
             <td><?= __('Intro Text') ?></td>
@@ -101,9 +109,9 @@ $this->end();
                     <td><?= h($malls->intro_text) ?></td>
                     <td><?= h($malls->city_id) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link('', ['controller' => 'Malls', 'action' => 'view', $malls->], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
-                        <?= $this->Html->link('', ['controller' => 'Malls', 'action' => 'edit', $malls->], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
-                        <?= $this->Form->postLink('', ['controller' => 'Malls', 'action' => 'delete', $malls->], ['confirm' => __('Are you sure you want to delete # {0}?', $malls->), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
+                        <?= $this->Html->link('', ['controller' => 'Malls', 'action' => 'view', $malls->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
+                        <?= $this->Html->link('', ['controller' => 'Malls', 'action' => 'edit', $malls->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>
+                        <?= $this->Form->postLink('', ['controller' => 'Malls', 'action' => 'delete', $malls->id], ['confirm' => __('Are you sure you want to delete # {0}?', $malls->id), 'title' => __('Delete'), 'class' => 'btn btn-default glyphicon glyphicon-trash']) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -123,6 +131,7 @@ $this->end();
             <thead>
             <tr>
                 <th><?= __('Id') ?></th>
+                <th><?= __('Name') ?></th>
                 <th><?= __('Slug') ?></th>
                 <th><?= __('Seo Title') ?></th>
                 <th><?= __('Seo Desc') ?></th>
@@ -140,15 +149,15 @@ $this->end();
                 <th><?= __('City Region Id') ?></th>
                 <th><?= __('Geo Latt') ?></th>
                 <th><?= __('Geo Long') ?></th>
-                <th><?= __('Admin Level 2 Id') ?></th>
+                <th><?= __('Admin Level 2') ?></th>
                 <th><?= __('Flag Mall') ?></th>
-                <th><?= __('Mail Id') ?></th>
+                <th><?= __('Mall Id') ?></th>
                 <th><?= __('Last Update') ?></th>
                 <th><?= __('Flag Featured') ?></th>
                 <th><?= __('Rating') ?></th>
                 <th><?= __('Flag Published') ?></th>
                 <th><?= __('Created') ?></th>
-                <th><?= __('Modifed') ?></th>
+                <th><?= __('Modified') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
             </thead>
@@ -156,6 +165,7 @@ $this->end();
             <?php foreach ($city->venues as $venues): ?>
                 <tr>
                     <td><?= h($venues->id) ?></td>
+                    <td><?= h($venues->name) ?></td>
                     <td><?= h($venues->slug) ?></td>
                     <td><?= h($venues->seo_title) ?></td>
                     <td><?= h($venues->seo_desc) ?></td>
@@ -173,15 +183,15 @@ $this->end();
                     <td><?= h($venues->city_region_id) ?></td>
                     <td><?= h($venues->geo_latt) ?></td>
                     <td><?= h($venues->geo_long) ?></td>
-                    <td><?= h($venues->admin_level_2_id) ?></td>
+                    <td><?= h($venues->admin_level_2) ?></td>
                     <td><?= h($venues->flag_mall) ?></td>
-                    <td><?= h($venues->mail_id) ?></td>
+                    <td><?= h($venues->mall_id) ?></td>
                     <td><?= h($venues->last_update) ?></td>
                     <td><?= h($venues->flag_featured) ?></td>
                     <td><?= h($venues->rating) ?></td>
                     <td><?= h($venues->flag_published) ?></td>
                     <td><?= h($venues->created) ?></td>
-                    <td><?= h($venues->modifed) ?></td>
+                    <td><?= h($venues->modified) ?></td>
                     <td class="actions">
                         <?= $this->Html->link('', ['controller' => 'Venues', 'action' => 'view', $venues->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
                         <?= $this->Html->link('', ['controller' => 'Venues', 'action' => 'edit', $venues->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>

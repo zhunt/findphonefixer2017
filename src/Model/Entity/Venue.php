@@ -7,6 +7,7 @@ use Cake\ORM\Entity;
  * Venue Entity
  *
  * @property int $id
+ * @property string $name
  * @property string $slug
  * @property string $seo_title
  * @property string $seo_desc

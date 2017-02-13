@@ -68,22 +68,25 @@ class ProvincesTable extends Table
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
-        $validator
+
+
+         $validator
             ->requirePresence('slug', 'create')
             ->allowEmpty('slug', 'create');
 
+/*
         $validator
-            ->requirePresence('seo_title', 'create')
-            ->notEmpty('seo_title');
+           // ->requirePresence('seo_title', 'create')
+            ->allowEmpty('seo_title');
 
         $validator
-            ->requirePresence('seo_desc', 'create')
-            ->notEmpty('seo_desc');
+           // ->requirePresence('seo_desc', 'create')
+            ->allowEmpty('seo_desc');
 
         $validator
-            ->requirePresence('intro_text', 'create')
-            ->notEmpty('intro_text');
-
+           // ->requirePresence('intro_text', 'create')
+            ->allowEmpty('intro_text');
+*/
         return $validator;
     }
 

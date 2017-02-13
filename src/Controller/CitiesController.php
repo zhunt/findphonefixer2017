@@ -56,8 +56,8 @@ class CitiesController extends AppController
             $city = $this->Cities->patchEntity($city, $this->request->data);
             if ($this->Cities->save($city)) {
                 $this->Flash->success(__('The city has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+debug($city);debug($this->request->data);
+                //return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The city could not be saved. Please, try again.'));
         }

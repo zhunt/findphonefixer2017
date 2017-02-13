@@ -4,6 +4,10 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
 $this->start('tb_actions');
 ?>
     <li><?= $this->Html->link(__('New City'), ['action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Provinces'), ['controller' => 'Provinces', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Province'), ['controller' => 'Provinces', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']); ?></li>
     <li><?= $this->Html->link(__('List Malls'), ['controller' => 'Malls', 'action' => 'index']); ?></li>
     <li><?= $this->Html->link(__('New Mall'), ['controller' => 'Malls', 'action' => 'add']); ?></li>
     <li><?= $this->Html->link(__('List Venues'), ['controller' => 'Venues', 'action' => 'index']); ?></li>
@@ -32,8 +36,12 @@ $this->start('tb_actions');
             <td><?= h($city->slug) ?></td>
             <td><?= h($city->seo_title) ?></td>
             <td><?= h($city->seo_desc) ?></td>
-            <td><?= $this->Number->format($city->province_id) ?></td>
-            <td><?= $this->Number->format($city->country_id) ?></td>
+            <td>
+                <?= $city->has('province') ? $this->Html->link($city->province->name, ['controller' => 'Provinces', 'action' => 'view', $city->province->id]) : '' ?>
+            </td>
+            <td>
+                <?= $city->has('country') ? $this->Html->link($city->country->name, ['controller' => 'Countries', 'action' => 'view', $city->country->id]) : '' ?>
+            </td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'view', $city->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>
                 <?= $this->Html->link('', ['action' => 'edit', $city->id], ['title' => __('Edit'), 'class' => 'btn btn-default glyphicon glyphicon-pencil']) ?>

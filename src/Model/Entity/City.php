@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property int $province_id
  * @property int $country_id
  *
+ * @property \App\Model\Entity\Province $province
+ * @property \App\Model\Entity\Country $country
  * @property \App\Model\Entity\Mall[] $malls
  * @property \App\Model\Entity\Venue[] $venues
  */

@@ -21,12 +21,12 @@ $this->start('tb_actions');
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id'); ?></th>
+            <th><?= $this->Paginator->sort('name'); ?></th>
             <th><?= $this->Paginator->sort('slug'); ?></th>
             <th><?= $this->Paginator->sort('seo_title'); ?></th>
             <th><?= $this->Paginator->sort('city_id'); ?></th>
             <th><?= $this->Paginator->sort('country_id'); ?></th>
             <th><?= $this->Paginator->sort('province_id'); ?></th>
-            <th><?= $this->Paginator->sort('city_region_id'); ?></th>
             <th class="actions"><?= __('Actions'); ?></th>
         </tr>
     </thead>
@@ -34,6 +34,7 @@ $this->start('tb_actions');
         <?php foreach ($venues as $venue): ?>
         <tr>
             <td><?= $this->Number->format($venue->id) ?></td>
+            <td><?= h($venue->name) ?></td>
             <td><?= h($venue->slug) ?></td>
             <td><?= h($venue->seo_title) ?></td>
             <td>
@@ -44,9 +45,6 @@ $this->start('tb_actions');
             </td>
             <td>
                 <?= $venue->has('province') ? $this->Html->link($venue->province->name, ['controller' => 'Provinces', 'action' => 'view', $venue->province->id]) : '' ?>
-            </td>
-            <td>
-                <?= $venue->has('city_region') ? $this->Html->link($venue->city_region->name, ['controller' => 'CityRegions', 'action' => 'view', $venue->city_region->id]) : '' ?>
             </td>
             <td class="actions">
                 <?= $this->Html->link('', ['action' => 'view', $venue->id], ['title' => __('View'), 'class' => 'btn btn-default glyphicon glyphicon-eye-open']) ?>

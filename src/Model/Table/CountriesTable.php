@@ -70,7 +70,7 @@ class CountriesTable extends Table
         $validator
             ->requirePresence('slug', 'create')
             ->allowEmpty('slug', 'create');
-
+/*
         $validator
             ->requirePresence('seo_title', 'create')
             ->notEmpty('seo_title');
@@ -82,6 +82,7 @@ class CountriesTable extends Table
         $validator
             ->requirePresence('intro_text', 'create')
             ->notEmpty('intro_text');
+        */
 
         return $validator;
     }

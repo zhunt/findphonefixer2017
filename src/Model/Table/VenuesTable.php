@@ -38,6 +38,10 @@ class VenuesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug'); // put this up top to work properly
+        $this->addBehavior('Geocode', ['field' => 'name']);
+
+
         $this->table('venues');
         $this->displayField('id');
         $this->primaryKey('id');
@@ -61,7 +65,7 @@ class VenuesTable extends Table
             'foreignKey' => 'mall_id'
         ]);
 
-        $this->addBehavior('Muffin/Slug.Slug', []);
+
     }
 
     /**
@@ -158,12 +162,14 @@ class VenuesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        /*
         $rules->add($rules->existsIn(['city_id'], 'Cities'));
         $rules->add($rules->existsIn(['country_id'], 'Countries'));
         $rules->add($rules->existsIn(['province_id'], 'Provinces'));
         $rules->add($rules->existsIn(['city_region_id'], 'CityRegions'));
         $rules->add($rules->existsIn(['mall_id'], 'Malls'));
-
+*/
         return $rules;
+
     }
 }

@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Provinces
  * @property \Cake\ORM\Association\BelongsTo $Countries
+ * @property \Cake\ORM\Association\HasMany $CityRegions
  * @property \Cake\ORM\Association\HasMany $Malls
  * @property \Cake\ORM\Association\HasMany $Venues
  *
@@ -35,6 +36,8 @@ class CitiesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug', []);
+
         $this->table('cities');
         $this->displayField('name');
         $this->primaryKey('id');
@@ -45,6 +48,9 @@ class CitiesTable extends Table
         $this->belongsTo('Countries', [
             'foreignKey' => 'country_id'
         ]);
+        $this->hasMany('CityRegions', [
+            'foreignKey' => 'city_id'
+        ]);
         $this->hasMany('Malls', [
             'foreignKey' => 'city_id'
         ]);
@@ -52,7 +58,7 @@ class CitiesTable extends Table
             'foreignKey' => 'city_id'
         ]);
 
-        $this->addBehavior('Muffin/Slug.Slug', []);
+
     }
 
     /**
@@ -75,18 +81,19 @@ class CitiesTable extends Table
             ->requirePresence('slug', 'create')
             ->allowEmpty('slug', 'create');
 
+        /*
         $validator
             ->requirePresence('seo_title', 'create')
-            ->notEmpty('seo_title');
+            ->allowEmpty('seo_title');
 
         $validator
             ->requirePresence('seo_desc', 'create')
-            ->notEmpty('seo_desc');
+            ->allowEmpty('seo_desc');
 
         $validator
             ->requirePresence('intro_text', 'create')
-            ->notEmpty('intro_text');
-
+            ->allowEmpty('intro_text');
+*/
         return $validator;
     }
 
@@ -99,6 +106,7 @@ class CitiesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+
         $rules->add($rules->existsIn(['province_id'], 'Provinces'));
         $rules->add($rules->existsIn(['country_id'], 'Countries'));
 

@@ -4,7 +4,7 @@
   */
 ?>
 <?php
-$this->extend('../Layout/TwitterBootstrap/dashboard');
+//$this->extend('../Layout/TwitterBootstrap/dashboard');
 
 $this->start('tb_actions');
 ?>
@@ -46,29 +46,18 @@ $this->end();
     <?php
     echo $this->Form->input('name');
     echo $this->Form->input('slug');
-    echo $this->Form->input('seo_title');
-    echo $this->Form->input('seo_desc');
+
     echo $this->Form->input('address');
-    echo $this->Form->input('city_id', ['options' => $cities]);
-    echo $this->Form->input('phones');
-    echo $this->Form->input('websites');
-    echo $this->Form->input('amenities');
-    echo $this->Form->input('features');
-    echo $this->Form->input('services');
-    echo $this->Form->input('products');
-    echo $this->Form->input('photos');
-    echo $this->Form->input('country_id', ['options' => $countries]);
-    echo $this->Form->input('province_id', ['options' => $provinces]);
-    echo $this->Form->input('city_region_id', ['options' => $cityRegions]);
+
     echo $this->Form->input('geo_latt');
     echo $this->Form->input('geo_long');
-    echo $this->Form->input('admin_level_2');
-    echo $this->Form->input('flag_mall');
-    echo $this->Form->input('mall_id', ['options' => $malls]);
-    echo $this->Form->input('last_update');
-    echo $this->Form->input('flag_featured');
-    echo $this->Form->input('rating');
+
+
     echo $this->Form->input('flag_published');
+    echo $this->Form->input('city_id');
+    echo $this->Form->input('mall_id', ['empty' => '(none)']);
+
+
     ?>
 </fieldset>
 <?= $this->Form->button(__("Add")); ?>
