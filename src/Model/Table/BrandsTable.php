@@ -34,6 +34,9 @@ class BrandsTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug', []);
+
+
         $this->table('brands');
         $this->displayField('name');
         $this->primaryKey('id');

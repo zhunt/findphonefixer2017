@@ -84,7 +84,7 @@ class VenueTypesController extends AppController
             }
             $this->Flash->error(__('The venue type could not be saved. Please, try again.'));
         }
-        $venues = $this->VenueTypes->Venues->find('list', ['limit' => 200]);
+        $venues = $this->VenueTypes->Venues->find('list', [ 'valueField' => 'id', 'valueField' => 'name', 'limit' => 200]);
         $this->set(compact('venueType', 'venues'));
         $this->set('_serialize', ['venueType']);
     }

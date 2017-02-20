@@ -7,21 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Amenities Model
+ * Chains Model
  *
- * @property \Cake\ORM\Association\BelongsToMany $Venues
+ * @property \Cake\ORM\Association\HasMany $Venues
  *
- * @method \App\Model\Entity\Amenity get($primaryKey, $options = [])
- * @method \App\Model\Entity\Amenity newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Amenity[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Amenity|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Amenity patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Amenity[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Amenity findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Chain get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Chain newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Chain[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Chain|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Chain patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Chain[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Chain findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class AmenitiesTable extends Table
+class ChainsTable extends Table
 {
 
     /**
@@ -34,19 +34,14 @@ class AmenitiesTable extends Table
     {
         parent::initialize($config);
 
-        $this->addBehavior('Muffin/Slug.Slug', []);
-
-
-        $this->table('amenities');
+        $this->table('chains');
         $this->displayField('name');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsToMany('Venues', [
-            'foreignKey' => 'amenity_id',
-            'targetForeignKey' => 'venue_id',
-            'joinTable' => 'amenities_venues'
+        $this->hasMany('Venues', [
+            'foreignKey' => 'chain_id'
         ]);
     }
 
@@ -68,6 +63,10 @@ class AmenitiesTable extends Table
 
         $validator
             ->allowEmpty('slug');
+
+        $validator
+            ->boolean('local_chain')
+            ->allowEmpty('local_chain');
 
         return $validator;
     }

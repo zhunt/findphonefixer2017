@@ -34,6 +34,8 @@ class CuisinesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug', []);
+
         $this->table('cuisines');
         $this->displayField('name');
         $this->primaryKey('id');
