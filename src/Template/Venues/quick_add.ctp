@@ -4,7 +4,7 @@
   */
 ?>
 <?php
-//$this->extend('../Layout/TwitterBootstrap/dashboard');
+$this->extend('../Layout/TwitterBootstrap/dashboard');
 
 $this->start('tb_actions');
 ?>
@@ -42,23 +42,23 @@ $this->end();
 ?>
 <?= $this->Form->create($venue); ?>
 <fieldset>
-    <legend><?= __('Add {0}', ['Venue']) ?></legend>
+    <legend>Quick Add Venue</legend>
     <?php
     echo $this->Form->input('name');
-    echo $this->Form->input('slug');
+    //echo $this->Form->input('slug');
 
     echo $this->Form->input('address');
 
-    echo $this->Form->input('geo_latt');
-    echo $this->Form->input('geo_long');
+    //echo $this->Form->input('geo_latt');
+    //echo $this->Form->input('geo_long');
 
 
     echo $this->Form->input('flag_published');
-    echo $this->Form->input('city_id');
+    //echo $this->Form->input('city_id');
     echo $this->Form->input('mall_id', ['empty' => '(none)']);
 
 
     ?>
 </fieldset>
-<?= $this->Form->button(__("Add")); ?>
+<?= $this->Form->button(__("Add Venue")); ?>
 <?= $this->Form->end() ?>

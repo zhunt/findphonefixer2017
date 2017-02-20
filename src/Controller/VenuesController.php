@@ -5,6 +5,8 @@ use App\Controller\AppController;
 
 use Cake\ORM\TableRegistry;
 
+use Cake\Utility\Text; // for slugging
+
 
 /**
  * Venues Controller
@@ -78,11 +80,11 @@ class VenuesController extends AppController
     public function testAdd() {
 
         $data = [
-          'name' => "The Pony Bar", // use this
+          'name' => "The Danforth Music Hall", // use this
             'country' => 'Canada',
             'province' => 'Ontario',
             'city' => 'Barrie',
-            'address' => '637 10th Ave, New York, NY 10036, USA' // use this
+            'address' => ' 147 Danforth Ave, Toronto, ON M4K 1N2' // use this
         ];
 
         $this->loadComponent('Geocode');
@@ -92,6 +94,8 @@ class VenuesController extends AppController
 
         // venues
         $venuesTable = TableRegistry::get('Venues');
+
+
 
         $country = $venuesTable->Countries->findByName( $geoData['country'] )->first();
         if (!$country){
@@ -103,7 +107,7 @@ class VenuesController extends AppController
         }
         $countryId = $country->id;
 
-        $province = $venuesTable->Provinces->findByName($geoData['province'])->first();
+        $province = $venuesTable->Provinces->findByNameAndCountryId($geoData['province'], $countryId )->first();
         if (!$province){
             $province = $venuesTable->Provinces->newEntity();
             $province->name = $geoData['province'];
@@ -114,17 +118,33 @@ class VenuesController extends AppController
         }
         $provinceId =  $province->id;
 
-        $city = $venuesTable->Cities->findByName($geoData['city'])->first();
+        $city = $venuesTable->Cities->findByNameAndProvinceId($geoData['city'], $provinceId)->first();
         if (!$city){
             $city = $venuesTable->Cities->newEntity();
             $city->name = $geoData['city'];
             $city->slug = '';
             $city->province_id = $provinceId;
             $city->country_id = $countryId;
+            $cityId = $venuesTable->Cities->save($city);
+        }
+        $cityId = $city->id;
+
+        if ($geoData['cityRegion']) {
+            $cityRegion = $venuesTable->CityRegions->findByNameAndCityId( $geoData['cityRegion'], $cityId )->first();
+            if (!$cityRegion){
+                $cityRegion = $venuesTable->CityRegions->newEntity();
+                $cityRegion->name = $geoData['cityRegion'];
+                $cityRegion->slug = '';
+                $cityRegion->province_id = $provinceId;
+                $cityRegion->country_id = $countryId;
+                $cityRegion->city_id = $cityId;
+                $cityRegionId = $venuesTable->CityRegions->save($city);
+            }
+            $cityRegionId = $cityRegion->id;
+        } else{
+            $cityRegionId = false;
         }
 
-        // work on later
-        $cityRegion = $venuesTable->CityRegions->findBySlug('none')->first();
 
         $venue = $venuesTable->newEntity();
         $venue->name = $data['name'];
@@ -158,28 +178,105 @@ class VenuesController extends AppController
      */
     public function quickAdd()
     {
-        $venue = $this->Venues->newEntity(['validate' => false]);
-        if ($this->request->is('post')) {
-            $this->request->data['city_id'] = 1;
-            $this->request->data['province_id'] = 1;
-            $this->request->data['cities'] = [ 'name' => 'Barrie'];
-            $this->request->data['provinces'] = [ 'name' => 'Quebec'];
-            $venue = $this->Venues->patchEntity($venue, $this->request->data);
 
-            debug( $this->request->data);
-            debug($venue);
+        $venue = $this->Venues->newEntity();
+
+       // $venue = $this->Venues->newEntity(['validate' => false]);
+        if ($this->request->is('post')) {
+          //  $this->request->data['name'] = 1;
+          //  $this->request->data['province_id'] = 1;
+          //  $this->request->data['cities'] = [ 'name' => 'Barrie'];
+          //  $this->request->data['provinces'] = [ 'name' => 'Quebec'];
+         //   $venue = $this->Venues->patchEntity($venue, $this->request->data);
+
+          //  debug( $this->request->data);
+          //  debug($venue);
+
+            // ----------
+            $this->loadComponent('Geocode');
+            $geoData = $this->Geocode->geocodeAddress( $this->request->data['address']);
+
+            debug($geoData); //exit;
+
+            // venues
+            $venuesTable = TableRegistry::get('Venues');
+
+
+
+            $country = $venuesTable->Countries->findByName( $geoData['country'] )->first();
+            if (!$country){
+                $country = $venuesTable->Countries->newEntity();
+                $country->name = $geoData['country'];
+                $country->slug = '';
+
+                $venuesTable->Countries->save($country);
+            }
+            $countryId = $country->id;
+
+            $province = $venuesTable->Provinces->findByNameAndCountryId($geoData['province'], $countryId )->first();
+            if (!$province){
+                $province = $venuesTable->Provinces->newEntity();
+                $province->name = $geoData['province'];
+                $province->slug = '';
+                $province->country_id = $countryId;
+
+                $venuesTable->Provinces->save($province);
+            }
+            $provinceId =  $province->id;
+
+            $city = $venuesTable->Cities->findByNameAndProvinceId($geoData['city'], $provinceId)->first();
+            if (!$city){
+                $city = $venuesTable->Cities->newEntity();
+                $city->name = $geoData['city'];
+                $city->slug = '';
+                $city->province_id = $provinceId;
+                $city->country_id = $countryId;
+                $cityId = $venuesTable->Cities->save($city);
+            }
+            $cityId = $city->id;
+
+            if ($geoData['cityRegion']) {
+                $cityRegion = $venuesTable->CityRegions->findByNameAndCityId( $geoData['cityRegion'], $cityId )->first();
+                if (!$cityRegion){
+                    $cityRegion = $venuesTable->CityRegions->newEntity();
+                    $cityRegion->name = $geoData['cityRegion'];
+                    $cityRegion->slug = '';
+                    $cityRegion->province_id = $provinceId;
+                    $cityRegion->country_id = $countryId;
+                    $cityRegion->city_id = $cityId;
+                    $cityRegionId = $venuesTable->CityRegions->save($city);
+                }
+                $cityRegionId = $cityRegion->id;
+            } else{
+                $cityRegionId = false;
+            }
+
+
+            $venue = $venuesTable->newEntity();
+            $venue->name = trim($this->request->data['name']);
+            $venue->flag_published = $this->request->data['flag_published'];
+            $venue->mall_id = $this->request->data['mall_id'];
+
+            $venue->address = $this->request->data['address'];
+
+            $venue->city = $city;
+            $venue->province = $province;
+            $venue->country = $country;
+            $venue->city_region = $cityRegion;
+
 
             if ($this->Venues->save($venue)) {
                 $this->Flash->success(__('The venue has been saved.'));
 
-               //return $this->redirect(['action' => 'index']);
+               return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The venue could not be saved. Please, try again.'));
         }
-        $cities = $this->Venues->Cities->find('list', ['limit' => 200]);
-        $countries = $this->Venues->Countries->find('list', ['limit' => 200]);
-        $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
-        $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
+       // $cities = $this->Venues->Cities->find('list', ['limit' => 200]);
+       // $countries = $this->Venues->Countries->find('list', ['limit' => 200]);
+       // $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
+       // $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
+
         $malls = $this->Venues->Malls->find('list', ['limit' => 200]);
         $this->set(compact('venue', 'cities', 'countries', 'provinces', 'cityRegions', 'malls'));
         $this->set('_serialize', ['venue']);

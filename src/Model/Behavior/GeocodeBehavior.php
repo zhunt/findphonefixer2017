@@ -57,6 +57,13 @@ class GeocodeBehavior extends Behavior {
         $config = $this->config();
         $address = $entity->get($config['address_field']);
 
+        // don't update if fields already populated
+        if ( !empty($entity->get($config['latt']) ) || !empty( $entity->get($config['long'] ) ) ) {
+            return;
+        }
+
+
+
        // $address = '910 13th Ave, Brooklyn, NY 11228, USA';
 
         $this->Geocoder = new Geocoder();
@@ -101,6 +108,8 @@ class GeocodeBehavior extends Behavior {
             $entity->set($config['latt'], $geoLatt);
             $entity->set($config['long'], $geoLong);
             $entity->set($config['provinceRegion'], $provinceRegion);
+
+            debug('updated geo latt/long');
 
             //$entity->set($config['slug'], Inflector::slug($value, $config['replacement']));
 

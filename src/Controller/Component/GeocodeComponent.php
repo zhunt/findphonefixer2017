@@ -47,7 +47,7 @@ class GeocodeComponent extends Component
         $addresses = $this->Geocoder->geocode($address);
 
         if (!empty($addresses)) {
-            $address = $addresses->first();
+            $address = $addresses->first(); debug($address);
 
             $formatter = new \Geocoder\Formatter\StringFormatter();
 
@@ -55,6 +55,7 @@ class GeocodeComponent extends Component
             $country = $formatter->format($address, '%C');
             $city = $formatter->format($address, '%L');
             $cityRegion = $formatter->format($address, '%D');
+            $streetName = $formatter->format($address, '%S');
 
             $province = $formatter->format($address, '%A1');
             $provinceRegion = $formatter->format($address, '%A2');

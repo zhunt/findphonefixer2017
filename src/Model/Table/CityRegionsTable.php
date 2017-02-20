@@ -68,14 +68,14 @@ class CityRegionsTable extends Table
             ->requirePresence('slug', 'create')
             ->allowEmpty('slug', 'create');
 
-        $validator
+ /*       $validator
             ->requirePresence('seo_title', 'create')
             ->notEmpty('seo_title');
 
         $validator
             ->requirePresence('seo_desc', 'create')
             ->notEmpty('seo_desc');
-
+*/
         return $validator;
     }
 
