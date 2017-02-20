@@ -14,6 +14,13 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Provinces
  * @property \Cake\ORM\Association\BelongsTo $CityRegions
  * @property \Cake\ORM\Association\BelongsTo $Malls
+ * @property \Cake\ORM\Association\BelongsTo $Chains
+ * @property \Cake\ORM\Association\BelongsToMany $Amenities
+ * @property \Cake\ORM\Association\BelongsToMany $Brands
+ * @property \Cake\ORM\Association\BelongsToMany $Cuisines
+ * @property \Cake\ORM\Association\BelongsToMany $Products
+ * @property \Cake\ORM\Association\BelongsToMany $Services
+ * @property \Cake\ORM\Association\BelongsToMany $VenueTypes
  *
  * @method \App\Model\Entity\Venue get($primaryKey, $options = [])
  * @method \App\Model\Entity\Venue newEntity($data = null, array $options = [])
@@ -64,8 +71,40 @@ class VenuesTable extends Table
         $this->belongsTo('Malls', [
             'foreignKey' => 'mall_id'
         ]);
-
-
+        $this->belongsTo('Chains', [
+            'foreignKey' => 'chain_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsToMany('Amenities', [
+            'foreignKey' => 'venue_id',
+            'targetForeignKey' => 'amenity_id',
+            'joinTable' => 'amenities_venues'
+        ]);
+        $this->belongsToMany('Brands', [
+            'foreignKey' => 'venue_id',
+            'targetForeignKey' => 'brand_id',
+            'joinTable' => 'brands_venues'
+        ]);
+        $this->belongsToMany('Cuisines', [
+            'foreignKey' => 'venue_id',
+            'targetForeignKey' => 'cuisine_id',
+            'joinTable' => 'cuisines_venues'
+        ]);
+        $this->belongsToMany('Products', [
+            'foreignKey' => 'venue_id',
+            'targetForeignKey' => 'product_id',
+            'joinTable' => 'products_venues'
+        ]);
+        $this->belongsToMany('Services', [
+            'foreignKey' => 'venue_id',
+            'targetForeignKey' => 'service_id',
+            'joinTable' => 'services_venues'
+        ]);
+        $this->belongsToMany('VenueTypes', [
+            'foreignKey' => 'venue_id',
+            'targetForeignKey' => 'venue_type_id',
+            'joinTable' => 'venue_types_venues'
+        ]);
     }
 
     /**
@@ -102,21 +141,13 @@ class VenuesTable extends Table
 
         $validator
             ->allowEmpty('websites');
-
-        $validator
-            ->allowEmpty('amenities');
-
-        $validator
-            ->allowEmpty('features');
-
-        $validator
-            ->allowEmpty('services');
-
-        $validator
-            ->allowEmpty('products');
+        
 
         $validator
             ->allowEmpty('photos');
+
+        $validator
+            ->allowEmpty('location_hours');
 
         $validator
             ->numeric('geo_latt')
@@ -162,14 +193,13 @@ class VenuesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        /*
         $rules->add($rules->existsIn(['city_id'], 'Cities'));
         $rules->add($rules->existsIn(['country_id'], 'Countries'));
         $rules->add($rules->existsIn(['province_id'], 'Provinces'));
         $rules->add($rules->existsIn(['city_region_id'], 'CityRegions'));
         $rules->add($rules->existsIn(['mall_id'], 'Malls'));
-*/
-        return $rules;
+        $rules->add($rules->existsIn(['chain_id'], 'Chains'));
 
+        return $rules;
     }
 }

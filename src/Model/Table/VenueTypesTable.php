@@ -34,6 +34,8 @@ class VenueTypesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug', []);
+
         $this->table('venue_types');
         $this->displayField('name');
         $this->primaryKey('id');

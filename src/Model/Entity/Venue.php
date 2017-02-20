@@ -20,6 +20,7 @@ use Cake\ORM\Entity;
  * @property string $services
  * @property string $products
  * @property string $photos
+ * @property string $location_hours
  * @property int $country_id
  * @property int $province_id
  * @property int $city_region_id
@@ -28,6 +29,7 @@ use Cake\ORM\Entity;
  * @property string $admin_level_2
  * @property bool $flag_mall
  * @property int $mall_id
+ * @property int $chain_id
  * @property \Cake\I18n\Time $last_update
  * @property bool $flag_featured
  * @property float $rating

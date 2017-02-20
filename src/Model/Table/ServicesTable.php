@@ -34,6 +34,8 @@ class ServicesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug', []);
+
         $this->table('services');
         $this->displayField('name');
         $this->primaryKey('id');

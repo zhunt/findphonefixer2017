@@ -59,11 +59,10 @@ class VenuesController extends AppController
         $venue = $this->Venues->newEntity();
         if ($this->request->is('post')) {
             $venue = $this->Venues->patchEntity($venue, $this->request->data);
-
             if ($this->Venues->save($venue)) {
                 $this->Flash->success(__('The venue has been saved.'));
 
-               // return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The venue could not be saved. Please, try again.'));
         }
@@ -196,7 +195,7 @@ class VenuesController extends AppController
             $this->loadComponent('Geocode');
             $geoData = $this->Geocode->geocodeAddress( $this->request->data['address']);
 
-            debug($geoData); //exit;
+            //debug($geoData); //exit;
 
             // venues
             $venuesTable = TableRegistry::get('Venues');
@@ -249,6 +248,7 @@ class VenuesController extends AppController
                 $cityRegionId = $cityRegion->id;
             } else{
                 $cityRegionId = false;
+                $cityRegion = null;
             }
 
 
