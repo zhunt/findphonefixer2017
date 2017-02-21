@@ -14,6 +14,20 @@ $this->start('tb_actions');
     <li><?= $this->Html->link(__('New City Region'), ['controller' => 'CityRegions', 'action' => 'add']); ?></li>
     <li><?= $this->Html->link(__('List Malls'), ['controller' => 'Malls', 'action' => 'index']); ?></li>
     <li><?= $this->Html->link(__('New Mall'), ['controller' => 'Malls', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Chains'), ['controller' => 'Chains', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Chain'), ['controller' => 'Chains', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Amenities'), ['controller' => 'Amenities', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Amenity'), ['controller' => 'Amenities', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Brands'), ['controller' => 'Brands', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Brand'), ['controller' => 'Brands', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Cuisines'), ['controller' => 'Cuisines', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Cuisine'), ['controller' => 'Cuisines', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Products'), ['controller' => 'Products', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List Services'), ['controller' => 'Services', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Service'), ['controller' => 'Services', 'action' => 'add']); ?></li>
+    <li><?= $this->Html->link(__('List VenueTypes'), ['controller' => 'VenueTypes', 'action' => 'index']); ?></li>
+    <li><?= $this->Html->link(__('New Venue Type'), ['controller' => 'VenueTypes', 'action' => 'add']); ?></li>
 <?php $this->end(); ?>
 <?php $this->assign('tb_sidebar', '<ul class="nav nav-sidebar">' . $this->fetch('tb_actions') . '</ul>'); ?>
 

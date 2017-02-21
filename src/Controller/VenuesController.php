@@ -24,7 +24,7 @@ class VenuesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Cities', 'Countries', 'Provinces', 'CityRegions', 'Malls']
+            'contain' => ['Cities', 'Countries', 'Provinces', 'CityRegions', 'Malls', 'Chains']
         ];
         $venues = $this->paginate($this->Venues);
 
@@ -42,44 +42,17 @@ class VenuesController extends AppController
     public function view($id = null)
     {
         $venue = $this->Venues->get($id, [
-            'contain' => ['Cities', 'Countries', 'Provinces', 'CityRegions', 'Malls']
+            'contain' => ['Cities', 'Countries', 'Provinces', 'CityRegions', 'Malls', 'Chains', 'Amenities', 'Brands', 'Cuisines', 'Products', 'Services', 'VenueTypes']
         ]);
 
         $this->set('venue', $venue);
         $this->set('_serialize', ['venue']);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $venue = $this->Venues->newEntity();
-        if ($this->request->is('post')) {
-            $venue = $this->Venues->patchEntity($venue, $this->request->data);
-            if ($this->Venues->save($venue)) {
-                $this->Flash->success(__('The venue has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The venue could not be saved. Please, try again.'));
-        }
-        $cities = $this->Venues->Cities->find('list', ['limit' => 200]);
-        $countries = $this->Venues->Countries->find('list', ['limit' => 200]);
-        $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
-        $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
-        $malls = $this->Venues->Malls->find('list', ['limit' => 200]);
-        $this->set(compact('venue', 'cities', 'countries', 'provinces', 'cityRegions', 'malls'));
-        $this->set('_serialize', ['venue']);
-    }
-
-
     public function testAdd() {
 
         $data = [
-          'name' => "The Danforth Music Hall", // use this
+            'name' => "The Danforth Music Hall", // use this
             'country' => 'Canada',
             'province' => 'Ontario',
             'city' => 'Barrie',
@@ -180,16 +153,16 @@ class VenuesController extends AppController
 
         $venue = $this->Venues->newEntity();
 
-       // $venue = $this->Venues->newEntity(['validate' => false]);
+        // $venue = $this->Venues->newEntity(['validate' => false]);
         if ($this->request->is('post')) {
-          //  $this->request->data['name'] = 1;
-          //  $this->request->data['province_id'] = 1;
-          //  $this->request->data['cities'] = [ 'name' => 'Barrie'];
-          //  $this->request->data['provinces'] = [ 'name' => 'Quebec'];
-         //   $venue = $this->Venues->patchEntity($venue, $this->request->data);
+            //  $this->request->data['name'] = 1;
+            //  $this->request->data['province_id'] = 1;
+            //  $this->request->data['cities'] = [ 'name' => 'Barrie'];
+            //  $this->request->data['provinces'] = [ 'name' => 'Quebec'];
+            //   $venue = $this->Venues->patchEntity($venue, $this->request->data);
 
-          //  debug( $this->request->data);
-          //  debug($venue);
+            //  debug( $this->request->data);
+            //  debug($venue);
 
             // ----------
             $this->loadComponent('Geocode');
@@ -255,7 +228,10 @@ class VenuesController extends AppController
             $venue = $venuesTable->newEntity();
             $venue->name = trim($this->request->data['name']);
             $venue->flag_published = $this->request->data['flag_published'];
-            $venue->mall_id = $this->request->data['mall_id'];
+
+            if ($this->request->data['mall_id']) {
+                $venue->mall_id = $this->request->data['mall_id'];
+            }
 
             $venue->address = $this->request->data['address'];
 
@@ -268,17 +244,51 @@ class VenuesController extends AppController
             if ($this->Venues->save($venue)) {
                 $this->Flash->success(__('The venue has been saved.'));
 
-               return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The venue could not be saved. Please, try again.'));
         }
-       // $cities = $this->Venues->Cities->find('list', ['limit' => 200]);
-       // $countries = $this->Venues->Countries->find('list', ['limit' => 200]);
-       // $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
-       // $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
+        // $cities = $this->Venues->Cities->find('list', ['limit' => 200]);
+        // $countries = $this->Venues->Countries->find('list', ['limit' => 200]);
+        // $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
+        // $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
 
         $malls = $this->Venues->Malls->find('list', ['limit' => 200]);
         $this->set(compact('venue', 'cities', 'countries', 'provinces', 'cityRegions', 'malls'));
+        $this->set('_serialize', ['venue']);
+    }
+
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $venue = $this->Venues->newEntity();
+        if ($this->request->is('post')) {
+            $venue = $this->Venues->patchEntity($venue, $this->request->data);
+            if ($this->Venues->save($venue)) {
+                $this->Flash->success(__('The venue has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The venue could not be saved. Please, try again.'));
+        }
+        $cities = $this->Venues->Cities->find('list', ['limit' => 200]);
+        $countries = $this->Venues->Countries->find('list', ['limit' => 200]);
+        $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
+        $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
+        $malls = $this->Venues->Malls->find('list', ['limit' => 200]);
+        $chains = $this->Venues->Chains->find('list', ['limit' => 200]);
+        $amenities = $this->Venues->Amenities->find('list', ['limit' => 200]);
+        $brands = $this->Venues->Brands->find('list', ['limit' => 200]);
+        $cuisines = $this->Venues->Cuisines->find('list', ['limit' => 200]);
+        $products = $this->Venues->Products->find('list', ['limit' => 200]);
+        $services = $this->Venues->Services->find('list', ['limit' => 200]);
+        $venueTypes = $this->Venues->VenueTypes->find('list', ['limit' => 200]);
+        $this->set(compact('venue', 'cities', 'countries', 'provinces', 'cityRegions', 'malls', 'chains', 'amenities', 'brands', 'cuisines', 'products', 'services', 'venueTypes'));
         $this->set('_serialize', ['venue']);
     }
 
@@ -292,8 +302,8 @@ class VenuesController extends AppController
     public function edit($id = null)
     {
         $venue = $this->Venues->get($id, [
-            'contain' => []
-        ]);
+            'contain' => ['Amenities', 'Brands', 'Cuisines', 'Products', 'Services', 'VenueTypes']
+        ]); // debug($venue);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $venue = $this->Venues->patchEntity($venue, $this->request->data);
             if ($this->Venues->save($venue)) {
@@ -308,7 +318,14 @@ class VenuesController extends AppController
         $provinces = $this->Venues->Provinces->find('list', ['limit' => 200]);
         $cityRegions = $this->Venues->CityRegions->find('list', ['limit' => 200]);
         $malls = $this->Venues->Malls->find('list', ['limit' => 200]);
-        $this->set(compact('venue', 'cities', 'countries', 'provinces', 'cityRegions', 'malls'));
+        $chains = $this->Venues->Chains->find('list', ['limit' => 200]);
+        $amenities = $this->Venues->Amenities->find('list', ['limit' => 200]);
+        $brands = $this->Venues->Brands->find('list', ['limit' => 200]);
+        $cuisines = $this->Venues->Cuisines->find('list', ['limit' => 200]);
+        $products = $this->Venues->Products->find('list', ['limit' => 200]);
+        $services = $this->Venues->Services->find('list', ['limit' => 200]);
+        $venueTypes = $this->Venues->VenueTypes->find('list', ['limit' => 200]);
+        $this->set(compact('venue', 'cities', 'countries', 'provinces', 'cityRegions', 'malls', 'chains', 'amenities', 'brands', 'cuisines', 'products', 'services', 'venueTypes'));
         $this->set('_serialize', ['venue']);
     }
 

@@ -109,7 +109,7 @@ class GeocodeBehavior extends Behavior {
             $entity->set($config['long'], $geoLong);
             $entity->set($config['provinceRegion'], $provinceRegion);
 
-            debug('updated geo latt/long');
+            //debug('updated geo latt/long');
 
             //$entity->set($config['slug'], Inflector::slug($value, $config['replacement']));
 

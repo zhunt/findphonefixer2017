@@ -15,10 +15,6 @@ use Cake\ORM\Entity;
  * @property int $city_id
  * @property string $phones
  * @property string $websites
- * @property string $amenities
- * @property string $features
- * @property string $services
- * @property string $products
  * @property string $photos
  * @property string $location_hours
  * @property int $country_id
@@ -42,6 +38,13 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Province $province
  * @property \App\Model\Entity\CityRegion $city_region
  * @property \App\Model\Entity\Mall $mall
+ * @property \App\Model\Entity\Chain $chain
+ * @property \App\Model\Entity\Amenity[] $amenities
+ * @property \App\Model\Entity\Brand[] $brands
+ * @property \App\Model\Entity\Cuisine[] $cuisines
+ * @property \App\Model\Entity\Product[] $products
+ * @property \App\Model\Entity\Service[] $services
+ * @property \App\Model\Entity\VenueType[] $venue_types
  */
 class Venue extends Entity
 {

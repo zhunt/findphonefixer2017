@@ -8,14 +8,6 @@ $this->extend('../Layout/TwitterBootstrap/dashboard');
 
 $this->start('tb_actions');
 ?>
-    <li><?=
-    $this->Form->postLink(
-        __('Delete'),
-        ['action' => 'delete', $venue->id],
-        ['confirm' => __('Are you sure you want to delete # {0}?', $venue->id)]
-    )
-    ?>
-    </li>
     <li><?= $this->Html->link(__('List Venues'), ['action' => 'index']) ?></li>
     <li><?= $this->Html->link(__('List Cities'), ['controller' => 'Cities', 'action' => 'index']) ?> </li>
     <li><?= $this->Html->link(__('New City'), ['controller' => 'Cities', 'action' => 'add']) ?> </li>
@@ -47,14 +39,6 @@ $this->end();
 $this->start('tb_sidebar');
 ?>
 <ul class="nav nav-sidebar">
-    <li><?=
-    $this->Form->postLink(
-        __('Delete'),
-        ['action' => 'delete', $venue->id],
-        ['confirm' => __('Are you sure you want to delete # {0}?', $venue->id)]
-    )
-    ?>
-    </li>
     <li><?= $this->Html->link(__('List Venues'), ['action' => 'index']) ?></li>
     <li><?= $this->Html->link(__('List Cities'), ['controller' => 'Cities', 'action' => 'index']) ?> </li>
     <li><?= $this->Html->link(__('New City'), ['controller' => 'Cities', 'action' => 'add']) ?> </li>
@@ -84,41 +68,21 @@ $this->start('tb_sidebar');
 <?php
 $this->end();
 ?>
-<?= $this->Form->create($venue); ?>
+<?= $this->Form->create('import'); ?>
 <fieldset>
-    <legend><?= __('Edit {0}', ['Venue']) ?></legend>
     <?php
-    echo $this->Form->input('name');
-    echo $this->Form->input('slug');
-    echo $this->Form->input('seo_title');
-    echo $this->Form->input('seo_desc');
-    echo $this->Form->input('address');
-    echo $this->Form->input('city_id', ['options' => $cities]);
-    // hide json fields for now
-   // echo $this->Form->input('phones', ['type' => 'textarea']);
-   // echo $this->Form->input('websites', ['type' => 'textarea']);
-   // echo $this->Form->input('photos');
-   // echo $this->Form->input('location_hours', ['type' => 'textarea']);
-    echo $this->Form->input('country_id', ['options' => $countries]);
-    echo $this->Form->input('province_id', ['options' => $provinces]);
-    echo $this->Form->input('city_region_id', ['options' => $cityRegions, 'empty' => '(choose one)']);
-    echo $this->Form->input('geo_latt');
-    echo $this->Form->input('geo_long');
-    echo $this->Form->input('admin_level_2');
-    echo $this->Form->input('flag_mall');
-    echo $this->Form->input('mall_id', ['options' => $malls, 'empty' => '(choose one)' ]);
-    echo $this->Form->input('chain_id', ['options' => $chains]);
-    echo $this->Form->input('last_update');
-    echo $this->Form->input('flag_featured');
-    echo $this->Form->input('rating');
-    echo $this->Form->input('flag_published');
-    echo $this->Form->input('amenities._ids', ['options' => $amenities]);
-    echo $this->Form->input('brands._ids', ['options' => $brands]);
-    echo $this->Form->input('cuisines._ids', ['options' => $cuisines]);
-    echo $this->Form->input('products._ids', ['options' => $products]);
-    echo $this->Form->input('services._ids', ['options' => $services]);
-    echo $this->Form->input('venue_types._ids', ['options' => $venueTypes]);
+    $options = [
+       // 'add_products' => 'Add Products',
+        'add_venues' => 'Add Venues'
+    ];
+    echo $this->Form->select('operation', $options, [
+        'multiple' => 'radio'
+    ]);
+
     ?>
+
+
+
 </fieldset>
-<?= $this->Form->button(__("Save")); ?>
+<?= $this->Form->button(__("Add")); ?>
 <?= $this->Form->end() ?>

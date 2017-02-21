@@ -55,7 +55,7 @@ $this->end();
 
     echo $this->Form->input('flag_published');
     //echo $this->Form->input('city_id');
-    echo $this->Form->input('mall_id', ['empty' => '(none)']);
+    echo $this->Form->input('mall_id', ['options' => $malls, 'empty' => '(choose one)' ]);
 
 
     ?>

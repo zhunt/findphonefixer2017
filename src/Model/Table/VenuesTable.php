@@ -6,6 +6,9 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+use Cake\Database\Schema\Table as Schema; // added for JSON
+
+
 /**
  * Venues Model
  *
@@ -34,6 +37,16 @@ use Cake\Validation\Validator;
  */
 class VenuesTable extends Table
 {
+
+    // Added for JSON
+    protected function _initializeSchema(Schema $schema)
+    {
+        $schema->columnType('phones', 'json');
+        $schema->columnType('photos', 'json');
+        $schema->columnType('websites', 'json');
+        $schema->columnType('location_hours', 'json');
+        return $schema;
+    }
 
     /**
      * Initialize method
@@ -72,8 +85,7 @@ class VenuesTable extends Table
             'foreignKey' => 'mall_id'
         ]);
         $this->belongsTo('Chains', [
-            'foreignKey' => 'chain_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'chain_id'
         ]);
         $this->belongsToMany('Amenities', [
             'foreignKey' => 'venue_id',
@@ -141,7 +153,6 @@ class VenuesTable extends Table
 
         $validator
             ->allowEmpty('websites');
-        
 
         $validator
             ->allowEmpty('photos');

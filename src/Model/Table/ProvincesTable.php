@@ -34,6 +34,8 @@ class ProvincesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Muffin/Slug.Slug', []);
+
         $this->table('provinces');
         $this->displayField('name');
         $this->primaryKey('id');
@@ -49,7 +51,7 @@ class ProvincesTable extends Table
             'foreignKey' => 'province_id'
         ]);
 
-        $this->addBehavior('Muffin/Slug.Slug', []);
+
     }
 
     /**
